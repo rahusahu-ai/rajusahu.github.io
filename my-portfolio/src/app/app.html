@@ -1,0 +1,114 @@
+
+<div class="min-h-screen transition-colors duration-300" [ngClass]="{'bg-slate-900 text-slate-100': isDark, 'bg-white text-slate-900': !isDark}">
+  <header class="sticky top-0 z-50 backdrop-blur bg-white/5 dark:bg-white/5 py-4">
+    <div class="container mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <img src="assets/profile.jpg" alt="profile" class="w-14 h-14 rounded-full border-2 border-sky-400"/>
+        <div>
+          <h1 class="text-xl font-semibold">{{name}}</h1>
+          <p class="text-sm text-sky-200">{{role}}</p>
+        </div>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="#skills" class="text-sm hover:underline">Skills</a>
+        <a href="#projects" class="text-sm hover:underline">Projects</a>
+        <a href="#contact" class="text-sm hover:underline">Contact</a>
+        <button (click)="toggleTheme()" class="ml-4 px-3 py-1 rounded bg-sky-500 text-white text-sm">Toggle</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-12">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div class="md:col-span-2 space-y-4">
+        <h2 class="text-4xl font-bold">{{name}}</h2>
+        <p class="max-w-2xl text-slate-300">Efficient and enthusiastic professional with 7+ years of industrial experience as a full stack developer in the .NET stack along with the Angular framework. Experienced in developing scalable web applications, handling APIs, and leading teams through agile methodology.</p>
+        <div class="flex gap-4 mt-4">
+          <a href="assets/resume.pdf" download class="px-4 py-2 bg-sky-600 rounded text-white text-sm">Download Resume</a>
+          <a [href]="github" target="_blank" class="px-4 py-2 border rounded text-sm">GitHub</a>
+        </div>
+      </div>
+
+      <div class="bg-white/5 p-6 rounded-lg shadow-lg">
+        <h3 class="font-semibold mb-2">Contact</h3>
+        <p class="text-sm"><strong>Email:</strong> {{email}}</p>
+        <p class="text-sm"><strong>Phone:</strong> {{phone}}</p>
+        <p class="text-sm"><strong>Location:</strong> {{location}}</p>
+      </div>
+    </section>
+
+    <section id="skills" class="mt-12">
+      <h3 class="text-2xl font-semibold mb-4">Skills & Technologies</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-4 rounded bg-white/5">
+          <h4 class="font-semibold mb-2">Frontend</h4>
+          <ul class="text-sm space-y-1"><li>Angular</li><li>TypeScript</li><li>HTML/CSS</li><li>React (familiar)</li></ul>
+        </div>
+        <div class="p-4 rounded bg-white/5">
+          <h4 class="font-semibold mb-2">Backend</h4>
+          <ul class="text-sm space-y-1"><li>.NET / ASP.NET MVC</li><li>Node.js</li><li>SQL Server</li><li>MongoDB</li></ul>
+        </div>
+        <div class="p-4 rounded bg-white/5">
+          <h4 class="font-semibold mb-2">Tools</h4>
+          <ul class="text-sm space-y-1"><li>Git</li><li>Docker</li><li>AWS</li><li>CI/CD</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="mt-12">
+      <h3 class="text-2xl font-semibold mb-4">Featured Projects</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-4 rounded bg-white/5">
+          <div class="h-36 bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 rounded mb-3"></div>
+          <h4 class="font-semibold">E-Commerce Platform</h4>
+          <p class="text-sm text-slate-300">Full-stack e-commerce solution with order tracking and payments.</p>
+          <div class="flex gap-2 mt-3">
+            <button class="px-2 py-1 border rounded text-xs">Demo</button>
+            <button class="px-2 py-1 border rounded text-xs">Code</button>
+          </div>
+        </div>
+        <div class="p-4 rounded bg-white/5">
+          <div class="h-36 bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 rounded mb-3"></div>
+          <h4 class="font-semibold">Task Management App</h4>
+          <p class="text-sm text-slate-300">Collaborative project management with real-time updates.</p>
+          <div class="flex gap-2 mt-3">
+            <button class="px-2 py-1 border rounded text-xs">Demo</button>
+            <button class="px-2 py-1 border rounded text-xs">Code</button>
+          </div>
+        </div>
+        <div class="p-4 rounded bg-white/5">
+          <div class="h-36 bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 rounded mb-3"></div>
+          <h4 class="font-semibold">Analytics Dashboard</h4>
+          <p class="text-sm text-slate-300">Data visualization platform for business insights.</p>
+          <div class="flex gap-2 mt-3">
+            <button class="px-2 py-1 border rounded text-xs">Demo</button>
+            <button class="px-2 py-1 border rounded text-xs">Code</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="mt-12">
+      <h3 class="text-2xl font-semibold mb-4">Get In Touch</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded bg-white/5">
+          <h4 class="font-semibold mb-2">Let's Connect!</h4>
+          <p class="text-sm text-slate-300">I'm open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+          <p class="mt-4"><strong>Email:</strong> {{email}}</p>
+        </div>
+        <div class="p-6 rounded bg-white/5">
+          <form onsubmit="return false">
+            <input type="text" placeholder="Name" class="w-full p-2 rounded mb-2 bg-transparent border"/>
+            <input type="email" placeholder="Email" class="w-full p-2 rounded mb-2 bg-transparent border"/>
+            <textarea placeholder="Message" class="w-full p-2 rounded mb-2 bg-transparent border"></textarea>
+            <button class="px-4 py-2 bg-sky-600 rounded text-white">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-8 text-center text-sm text-slate-400">
+    © {{year}} {{name}} — Built with Angular & Tailwind
+  </footer>
+</div>
