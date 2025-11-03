@@ -2,10 +2,27 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+// Import your standalone components (without 'Component' in the name)
+import { Header } from './header/header';
+import { ContactCard } from './contact-card/contact-card';
+import { Skills } from './skills/skills';
+import { Projects } from './projects/projects';
+import { ContactForm } from './contact-form/contact-form';
+import { Footer } from './footer/footer';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    Header,
+    ContactCard,
+    Skills,
+    Projects,
+    ContactForm,
+    Footer
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
