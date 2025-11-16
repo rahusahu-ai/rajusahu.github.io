@@ -1,7 +1,5 @@
 body {
-  @apply font-sans;
-}
-
-.dark body {
   @apply font-mono;
 }
+
+

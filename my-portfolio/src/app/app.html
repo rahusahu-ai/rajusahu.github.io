@@ -1,6 +1,6 @@
-<div class="min-h-screen transition-colors duration-300" [ngClass]="{'bg-slate-900 text-slate-100': isDark, 'bg-white text-slate-900': !isDark}">
+
   <!-- Header with Theme Toggle -->
-  <app-header
+     <app-header
     [name]="name"
     [role]="role"
     [github]="github"
@@ -8,7 +8,7 @@
     [toggleTheme]="toggleTheme.bind(this)">
   </app-header>
 
-  <main class="container mx-auto px-6 py-12 space-y-16">
+  <main>
     <!-- Contact Card with Icons -->
     <app-contact-card 
       [email]="email" 
@@ -19,40 +19,15 @@
       [github]="github">
     </app-contact-card>
 
-    <!-- Skills Section -->
-    <section class="space-y-8">
-      <h2 class="text-3xl font-bold flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-        Skills & Expertise
-      </h2>
+ 
+
+
       <app-skills></app-skills>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="space-y-8">
-      <h2 class="text-3xl font-bold flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-        </svg>
-        Featured Projects
-      </h2>
+      <app-experience></app-experience>
+      <app-education></app-education>
       <app-projects></app-projects>
-    </section>
+     <app-contact-form></app-contact-form>
+      <app-footer></app-footer>
+    </main>
+  
 
-    <!-- Contact Form Section -->
-    <section class="space-y-8">
-      <h2 class="text-3xl font-bold flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-        Get in Touch
-      </h2>
-      <app-contact-form [email]="email"></app-contact-form>
-    </section>
-  </main>
-
-  <!-- Footer with Copyright -->
-  <app-footer [year]="year" [name]="name"></app-footer>
-</div>

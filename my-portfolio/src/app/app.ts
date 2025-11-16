@@ -9,6 +9,8 @@ import { Skills } from './skills/skills';
 import { Projects } from './projects/projects';
 import { ContactForm } from './contact-form/contact-form';
 import { Footer } from './footer/footer';
+import { Experience } from './experience/experience';
+import { Education } from './education/education';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,8 @@ import { Footer } from './footer/footer';
     ContactCard,
     Skills,
     Projects,
+    Experience,
+    Education,
     ContactForm,
     Footer
   ],
@@ -29,12 +33,17 @@ import { Footer } from './footer/footer';
 export class App {
   protected readonly title = signal('my-portfolio');
   name = 'Raju Kumar Sahu';
-  role = 'Full Stack Developer (.NET + Angular)';
+  role = 'Full Stack Developer';
   email = 'rajuatuoh@gmail.com';
   phone = '+91-9542911419';
   github = 'https://github.com/rahusahu-ai';
   location = 'Hyderabad, India';
   year = new Date().getFullYear();
-  isDark = true;
+  isDark = false;
+
   toggleTheme() { this.isDark = !this.isDark; document.documentElement.classList.toggle('dark'); }
+
+
 }
+
+
