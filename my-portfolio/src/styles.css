@@ -1,8 +1,288 @@
-/* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Custom styles */
-html, body, app-root {
-  height: 100%;
+
+
+/* Base styles */
+body {
+/*  @apply antialiased bg-gradient-to-br from-slate-50 via-white to-slate-100  text-slate-100 transition-colors duration-500;
+*/
+@apply light-body
 }
+
+.dark body {
+  @apply antialiased bg-gradient-to-br from-slate-950 via-indigo-900 to-slate-800 transition-colors duration-700;
+}
+
+header {
+  @apply bg-[#4CA1AF]/70 backdrop-blur-lg border-b border-slate-200/50 text-indigo-900;
+}
+
+.dark header {
+  @apply bg-slate-950/70 backdrop-blur-lg border-b border-sky-800/30 text-sky-100;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Icon hover effects */
+svg {
+  @apply transition-transform duration-300;
+}
+
+h2:hover svg {
+  @apply rotate-6 scale-110;
+}
+
+/* Section spacing and hover effects */
+section {
+  @apply rounded-2xl p-6 bg-white/70 text-sky-700 shadow-lg transition-all duration-300;
+}
+
+section:hover {  
+}
+
+.dark section {
+  @apply bg-gradient-to-br from-slate-950 via-indigo-900 to-slate-800 text-sky-100;
+}
+
+.dark section:hover {}
+   
+
+
+.section-card {
+  @apply btn-grad-light;
+}
+
+/* dark-mode variant */
+.dark .section-card {
+  @apply btn-grad-dark;
+}
+
+
+.header-title {
+ @apply text-cyan-900 text-xl font-bold;;
+}
+
+.dark .header-title {
+ @apply text-cyan-100 text-xl font-bold;;
+} 
+
+.header-subtitle {
+    @apply text-blue-950 font-bold;
+  }
+
+.dark .header-subtitle {
+   @apply text-cyan-500 ;
+}
+
+.p-msg {
+  @apply text-slate-800;
+} 
+
+.dark .p-msg {
+  @apply text-slate-200;
+} 
+
+
+
+
+.btn-grad-light {
+  background-image: linear-gradient(to right, #43cea2 0%, #185a9d 51%, #43cea2 100%)
+}
+
+.btn-grad-light {
+  margin: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #1676b6;
+  border-radius: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.btn-grad-light:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-grad-dark {
+  background-image: linear-gradient(to right, #000046 0%, #1CB5E0 51%, #000046 100%)
+}
+
+.btn-grad-dark {
+  margin: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.btn-grad-dark:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.light-body {
+  background: #4CA1AF;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #C4E0E5, #4CA1AF);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #C4E0E5, #4CA1AF);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.skill-card {
+  background-image: linear-gradient(to right, #43cea2 0%, #185a9d 100%);
+  box-shadow: 0 0 20px #1676b6;
+  color: white;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  background-position: right center;
+  box-shadow: 0 10px 25px rgba(22, 118, 182, 0.35);
+}
+
+.dark .skill-card {
+  Background-image: linear-gradient(to right, #000046 0%, #1CB5E0 100%);
+  box-shadow: 0 0 20px #eee;
+  color: white;
+}
+
+.dark .skill-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  background-position: right center;
+  box-shadow: 0 10px 25px rgba(28, 181, 224, 0.25);
+}
+
+
+/* ===== REUSABLE TIMELINE CLASSES ===== */
+
+/* Base timeline container */
+.timeline-container {
+  @apply relative;
+}
+
+/* Vertical timeline line */
+.timeline-line {
+  @apply absolute top-0 bottom-0 w-0.5 bg-gradient-to-b from-sky-400 to-indigo-900;
+  margin: 3px;
+}
+
+.dark .timeline-line {
+  @apply bg-gradient-to-b from-sky-500/50 to-indigo-500/50;
+}
+
+/* Timeline item wrapper */
+.timeline-item {
+  @apply relative pl-20 mb-12;
+}
+
+/* Timeline dot/node */
+.timeline-dot {
+  @apply absolute -left-6 top-0 w-14 h-14 rounded-full flex items-center justify-center 
+         text-white transition-all duration-300 cursor-pointer;
+
+  /* Background gradient */
+  background-image: linear-gradient(to right, #43cea2 0%, #185a9d 100%);
+  color: white;
+
+  /* Glow shadow */
+  box-shadow: 0 0 20px #1676b6;
+}
+
+.timeline-dot:hover {
+  transform: translateY(-5px) scale(1.02);
+  background-position: right center;
+  box-shadow: 0 10px 25px rgba(22, 118, 182, 0.35);
+}
+
+
+.dark .timeline-dot {
+  @apply absolute -left-6 top-0 w-14 h-14 rounded-full flex items-center justify-center 
+         text-white transition-all duration-300 cursor-pointer;
+
+  /* Background gradient */
+   Background-image: linear-gradient(to right, #000046 0%, #1CB5E0 100%);
+      box-shadow: 0 0 20px #eee;
+      
+
+  /* Glow shadow */
+ color: white;
+}
+
+.dark .timeline-dot:hover {
+  transform: translateY(-5px) scale(1.02);
+  background-position: right center;
+  box-shadow: 0 10px 25px rgba(199, 219, 224, 0.25);
+}
+
+
+/* Timeline content card */
+.timeline-content {
+  @apply p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300;
+}
+
+.dark .timeline-content {
+  @apply p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ;
+  box-shadow: 0 10px 25px rgba(37, 190, 233, 0.25);
+}
+
+
+/* Timeline header */
+.timeline-header {
+  @apply flex items-start justify-between mb-3;
+}
+
+.timeline-date {
+  @apply text-sm px-3 py-1 rounded-full whitespace-nowrap;
+  
+}
+
+/* Icon */
+.timeline-icon {
+  @apply w-5 h-5;
+}
+
+.mobile-nav-bar {
+  @apply  bg-[#C4E0E5]/75
+}
+
+.dark .mobile-nav-bar {
+  @apply bg-slate-900/95
+}
+
+
+
+
+
+
+
+

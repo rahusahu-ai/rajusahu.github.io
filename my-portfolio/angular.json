@@ -12,7 +12,9 @@
       "architect": {
         "build": {
           "builder": "@angular/build:application",
+         
           "options": {
+            "outputPath": "dist/my-portfolio",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -101,6 +103,13 @@
               "src/styles.css"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+          "baseHref": "/rajusahu.in/",
+          "noSilent": true
+  }
         }
       }
     }
