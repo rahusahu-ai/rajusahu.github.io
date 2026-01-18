@@ -241,7 +241,7 @@ section:hover {
 .dark .timeline-dot:hover {
   transform: translateY(-5px) scale(1.02);
   background-position: right center;
-  box-shadow: 0 10px 25px rgba(28, 181, 224, 0.25);
+  box-shadow: 0 10px 25px rgba(199, 219, 224, 0.25);
 }
 
 
@@ -271,7 +271,13 @@ section:hover {
   @apply w-5 h-5;
 }
 
+.mobile-nav-bar {
+  @apply  bg-[#C4E0E5]/75
+}
 
+.dark .mobile-nav-bar {
+  @apply bg-slate-900/95
+}
 
 
 

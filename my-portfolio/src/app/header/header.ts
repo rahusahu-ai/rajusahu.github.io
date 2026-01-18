@@ -13,5 +13,11 @@ export class Header {
   @Input() github!: string;
   @Input() isDark!: boolean;
   @Input() toggleTheme!: () => void;
+  // Mobile menu state
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
 }
