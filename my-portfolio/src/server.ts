@@ -69,7 +69,7 @@ const getCookie = (req: express.Request, name: string): string | undefined => {
     ?.split('=').slice(1).join('=');
 };
 
-app.get('/api/kite/login', (_req, res) => {
+app.get('/api/kite/kiteLogin', (_req, res) => {
   if (!kiteApiKey) {
     console.error('[Kite] Login failed: KITE_API_KEY is not configured.');
     res.status(503).send({ message: 'Kite API key is not configured.' });
