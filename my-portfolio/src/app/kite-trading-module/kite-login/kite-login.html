@@ -1,0 +1,28 @@
+<section class="kite-panel" aria-labelledby="kite-title">
+  <div class="kite-header">
+    <span class="kite-logo" aria-hidden="true">K</span>
+    <div>
+      <p class="eyebrow">Kite Trading</p>
+      <h1 id="kite-title">Nifty 50 Market Data</h1>
+    </div>
+  </div>
+
+  <p class="description">
+    Sign in to Kite and retrieve the latest Nifty 50 market information through the portfolio server.
+  </p>
+
+  <div class="actions">
+    <button type="button" (click)="loginToKite()" [disabled]="isLoading">
+      {{ isLoading ? 'Working…' : 'Login to Kite' }}
+    </button>
+    <button type="button" class="secondary" (click)="getNifty50Data()" [disabled]="isLoading">
+      {{ isLoading ? 'Loading…' : 'Get Nifty 50 Data' }}
+    </button>
+  </div>
+
+  <p class="status" role="status" aria-live="polite">{{ status }}</p>
+
+  @if (nifty50Data) {
+    <pre>{{ nifty50Data | json }}</pre>
+  }
+</section>

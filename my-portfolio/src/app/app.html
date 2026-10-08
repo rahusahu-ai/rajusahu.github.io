@@ -1,15 +1,20 @@
 
-  <!-- Header with Theme Toggle -->
-     <app-header
-    [name]="name"
-    [role]="role"
-    [github]="github"
-    [isDark]="isDark"
-    [toggleTheme]="toggleTheme.bind(this)">
-  </app-header>
 
-  <main>
-    <!-- Contact Card with Icons -->
+
+<main>
+  @if (currentRoute === 'tradeAnalysis' || currentRoute === 'trade'|| currentRoute === 'tradeLogin') {
+    <router-outlet />
+  } @else {
+    <!-- Your main portfolio content (only shown on home route) -->
+    <ng-container>
+      <!-- Contact Card with Icons -->
+      <app-header
+  [name]="name"
+  [role]="role"
+  [github]="github"
+  [isDark]="isDark"
+  [toggleTheme]="toggleTheme.bind(this)">
+</app-header>
     <app-contact-card 
       [email]="email" 
       [phone]="phone" 
@@ -19,16 +24,19 @@
       [github]="github">
     </app-contact-card>
 
- 
+    <app-skills></app-skills>
+    <app-experience></app-experience>
+    <app-education></app-education>
+    <app-projects></app-projects>
+      <app-contact-form></app-contact-form>
 
-
-      <app-skills></app-skills>
-      <app-experience></app-experience>
-      <app-education></app-education>
-      <app-projects></app-projects>
-     <app-contact-form></app-contact-form>
       <app-footer></app-footer>
-    </main>
-    <router-outlet></router-outlet>
+    </ng-container>
+  }
+</main>
+
+
+
+    
   
 
