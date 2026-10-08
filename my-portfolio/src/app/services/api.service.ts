@@ -44,6 +44,16 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/auth/reset-password`, { token, password });
   }
 
+  // ==================== Kite Trading APIs ====================
+
+  loginToKite(): void {
+    window.location.assign('/api/kite/login');
+  }
+
+  getNifty50Data(): Observable<any> {
+    return this.http.get('/api/kite/nifty50');
+  }
+
   // ==================== Contact Form & Portfolio APIs ====================
 
   // Contact Form Submission

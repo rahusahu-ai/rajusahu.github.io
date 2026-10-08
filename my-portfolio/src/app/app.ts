@@ -1,8 +1,9 @@
 import { Component, signal, OnInit, OnDestroy, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet,Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 // Import your standalone components (without 'Component' in the name)
 import { Header } from './header/header';
@@ -13,7 +14,6 @@ import { ContactForm } from './contact-form/contact-form';
 import { Footer } from './footer/footer';
 import { Experience } from './experience/experience';
 import { Education } from './education/education';
-import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -37,7 +37,25 @@ import { AuthService } from './services/auth.service';
 export class App implements OnInit, OnDestroy {
   // Services
   private authService = inject(AuthService);
-  private router = inject(Router);
+ // private router = inject(Router);
+  currentRoute = '';
+
+  constructor(private router: Router) {
+    this.currentRoute = this.getRouteFromUrl(this.router.url);
+
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((event: any) => {
+        this.currentRoute = this.getRouteFromUrl(event.urlAfterRedirects);
+      });
+  }
+
+  private getRouteFromUrl(url: string): string {
+    return url.split('?')[0].replace(/^\/+|\/+$/g, '');
+  }
 
   // Properties
   protected readonly title = signal('my-portfolio');
