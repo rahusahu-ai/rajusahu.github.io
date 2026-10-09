@@ -46,9 +46,11 @@ export class ApiService {
 
   // ==================== Kite Trading APIs ====================
 
-  loginToKite(): void {
+   loginToKite(): Observable<{ loginUrl: string }> {
     const backendUrl = this.apiUrl.replace(/\/auth\/?$/, '');
-    window.location.assign(`${backendUrl}/kite/kiteLogin`);
+    return this.http.get<{ loginUrl: string }>(
+      `${backendUrl}/kite/kiteLogin`
+    ); 
   }
 
   getNifty50Data(): Observable<any> {

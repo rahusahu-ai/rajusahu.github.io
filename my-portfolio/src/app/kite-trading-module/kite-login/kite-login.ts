@@ -19,6 +19,15 @@ export class KiteLogin {
     this.isLoading = true;
     this.status = 'Opening Kite login…';
     this.apiService.loginToKite();
+
+    this.apiService.loginToKite().subscribe({
+    next: response => {
+      window.location.assign(response.loginUrl);
+    },
+    error: error => {
+      console.error('Unable to initiate Kite login', error);
+    }
+  });
   }
 
   getNifty50Data(): void {
