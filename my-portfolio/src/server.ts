@@ -5,14 +5,14 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
-const kiteApiBaseUrl = process.env['KITE_API_BASE_URL'] || 'https://api.kite.com';
+const kiteApiBaseUrl = process.env['KITE_API_BASE_URL'] || 'https://api.kite.trade';
 const kiteApiKey = process.env['KITE_API_KEY'];
-const kiteClientId = process.env['KITE_CLIENT_ID'];
 const kiteClientSecret = process.env['KITE_CLIENT_SECRET'];
-const kiteRedirectUri = process.env['KITE_REDIRECT_URI'] || 'http://localhost:4200/api/kite/callback';
+const kiteRedirectUri = process.env['KITE_REDIRECT_URI'] || 'https://rajusahu.in/api/kite/callback';
 const kiteSessionCookie = 'kite_session';
 
 const app = express();
@@ -27,37 +27,41 @@ const kiteRequest = async (path: string, accessToken?: string): Promise<Response
 };
 
 const getKiteAccessToken = async (requestToken: string): Promise<string> => {
-  if (!kiteClientId || !kiteClientSecret) {
-    console.error('[Kite] Token exchange failed: client ID or client secret is missing.');
+  if (!kiteApiKey || !kiteClientSecret) {
+    console.error('[Kite] Token exchange failed: API key or API secret is missing.');
     throw new Error('Kite OAuth credentials are not configured.');
   }
 
   console.log('[Kite] Exchanging request token with Kite API.');
+  const checksum = createHash('sha256')
+    .update(`${kiteApiKey}${requestToken}${kiteClientSecret}`)
+    .digest('hex');
   const params = new URLSearchParams({
-    grant_type: 'request_token',
-    client_id: kiteClientId,
-    client_secret: kiteClientSecret,
+    api_key: kiteApiKey,
     request_token: requestToken,
-    redirect_uri: kiteRedirectUri,
+    checksum,
   });
-  const response = await fetch(`${kiteApiBaseUrl}/api/v1/oauth/token`, {
+  const response = await fetch(`${kiteApiBaseUrl}/session/token`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Kite-Version': '3',
+    },
     body: params,
   });
   const body = await response.json() as {
-    access_token?: string;
-    refresh_token?: string;
+    data?: { access_token?: string };
     message?: string;
   };
 
-  if (!response.ok || !body.access_token) {
+  const accessToken = body.data?.access_token;
+  if (!response.ok || !accessToken) {
     console.error(`[Kite] Token exchange failed: ${response.status} ${body.message || 'No access token returned.'}`);
     throw new Error(body.message || 'Kite authentication failed.');
   }
 
   console.log(`[Kite] Token exchange succeeded with status ${response.status}.`);
-  return body.access_token;
+  return accessToken;
 };
 
 const getCookie = (req: express.Request, name: string): string | undefined => {
