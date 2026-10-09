@@ -47,4 +47,21 @@ export class KiteLogin {
       }
     });
   }
+
+  getprofile(): void {
+    this.isLoading = true;
+    this.status = 'Fetching profile data…';
+    this.nifty50Data = null;  
+    this.apiService.getprofile().subscribe({
+      next: (data) => {
+        this.nifty50Data = data;    
+    this.status = 'Profile data loaded';
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.status = error?.error?.message || 'Unable to load profile data';     
+    this.isLoading = false; 
+      }
+    });
+  }
 }
