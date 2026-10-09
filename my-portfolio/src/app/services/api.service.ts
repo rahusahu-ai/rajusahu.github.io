@@ -9,8 +9,11 @@ import { LoginRequest, LoginResponse, SignupRequest, SignupResponse } from '../m
 })
 export class ApiService {
   private apiUrl = environment.apiUrl;
+  private backendUrl = this.apiUrl.replace(/\/auth\/?$/, '');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    
+  }
 
   // ==================== Authentication APIs ====================
 
@@ -45,17 +48,21 @@ export class ApiService {
   }
 
   // ==================== Kite Trading APIs ====================
-
+  
    loginToKite(): Observable<{ loginUrl: string }> {
-    const backendUrl = this.apiUrl.replace(/\/auth\/?$/, '');
+    
     return this.http.get<{ loginUrl: string }>(
-      `${backendUrl}/kite/kiteLogin`
+      `${this.backendUrl}/kite/kiteLogin`
     ); 
   }
 
   getNifty50Data(): Observable<any> {
-    return this.http.get('/api/kite/nifty50');
+    return this.http.get(`${this.backendUrl}/kite/getNiftyIndexPerMinute`);
   }
+
+  getprofile(): Observable<any> {
+    return this.http.get(`${this.backendUrl}/kite/getKiteProfile`);
+  } 
 
   // ==================== Contact Form & Portfolio APIs ====================
 
