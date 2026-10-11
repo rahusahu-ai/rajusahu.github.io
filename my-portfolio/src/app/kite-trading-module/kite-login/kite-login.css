@@ -53,6 +53,61 @@ h1 {
   line-height: 1.6;
 }
 
+.market-form {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  border: 1px solid #304158;
+  border-radius: 0.75rem;
+  background: #0c1522;
+}
+
+.market-form h2 {
+  margin: 0 0 1rem;
+  color: #f0f5fa;
+  font-size: 1.1rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  min-width: 0;
+  gap: 0.4rem;
+  color: #b8c6d6;
+  font-size: 0.875rem;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #40516a;
+  border-radius: 0.4rem;
+  background: #111b2a;
+  color: #f0f5fa;
+  font: inherit;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #5eead4;
+  outline: 2px solid #5eead455;
+  outline-offset: 1px;
+}
+
+.field input[type='date'] {
+  color-scheme: dark;
+}
+
+.get-button {
+  margin-top: 1rem;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -96,6 +151,10 @@ pre {
   white-space: pre-wrap;
 }
 
+.request-preview {
+  border: 1px solid #304158;
+}
+
 @media (max-width: 480px) {
   .kite-panel {
     padding: 1.25rem;
@@ -105,7 +164,17 @@ pre {
     flex-direction: column;
   }
 
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
   button {
     width: 100%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 700px) {
+  .filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

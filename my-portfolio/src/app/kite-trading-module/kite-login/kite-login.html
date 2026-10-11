@@ -11,12 +11,77 @@
     Sign in to Kite and retrieve the latest Nifty 50 market information through the portfolio server.
   </p>
 
+  <form class="market-form" (ngSubmit)="getMarketData()">
+    <h2>Market data filters</h2>
+
+    <div class="filter-grid">
+      <label class="field">
+        <span>From date</span>
+        <input type="date" name="fromDate" [(ngModel)]="fromDate" required />
+      </label>
+
+      <label class="field">
+        <span>To date</span>
+        <input type="date" name="toDate" [(ngModel)]="toDate" required />
+      </label>
+
+      <label class="field">
+        <span>Time interval</span>
+        <select name="interval" [(ngModel)]="interval">
+          @for (item of intervals; track item.value) {
+            <option [value]="item.value">{{ item.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Symbol group</span>
+        <select name="marketSegment" [(ngModel)]="marketSegment" (ngModelChange)="onMarketSegmentChange()">
+          <option value="index">Index</option>
+          <option value="equity">Equity</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Instrument type</span>
+        <select name="instrumentType" [(ngModel)]="instrumentType">
+          <option value="normal">Normal</option>
+          <option value="option">Option</option>
+          <option value="future">Future</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Exchange</span>
+        <select name="exchange" [(ngModel)]="exchange">
+          <option value="NSE">NSE</option>
+          <option value="BSE">BSE</option>
+        </select>
+      </label>
+
+      <label class="field symbol-field">
+        <span>{{ marketSegment === 'index' ? 'Index' : 'Listed stock' }}</span>
+        <select name="symbol" [(ngModel)]="symbol" (ngModelChange)="onSymbolChange()">
+          @for (item of symbols; track item) {
+            <option [value]="item">{{ item }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Instrument token</span>
+        <input type="number" name="instrumentToken" [(ngModel)]="instrumentToken" min="1" step="1" required />
+      </label>
+    </div>
+
+    <button class="get-button" type="submit" [disabled]="isLoading">
+      {{ isLoading ? 'Loading…' : 'Get' }}
+    </button>
+  </form>
+
   <div class="actions">
     <button type="button" (click)="loginToKite()" [disabled]="isLoading">
       {{ isLoading ? 'Working…' : 'Login to Kite' }}
-    </button>
-    <button type="button" class="secondary" (click)="getNifty50Data()" [disabled]="isLoading">
-      {{ isLoading ? 'Loading…' : 'Get Nifty 50 Data' }}
     </button>
     <button type="button" class="secondary" (click)="getprofile()" [disabled]="isLoading">
       {{ isLoading ? 'Loading…' : 'Get Profile Data' }}
@@ -28,4 +93,5 @@
   @if (nifty50Data) {
     <pre>{{ nifty50Data | json }}</pre>
   }
+
 </section>

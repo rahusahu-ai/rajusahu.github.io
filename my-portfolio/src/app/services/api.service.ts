@@ -4,6 +4,17 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LoginRequest, LoginResponse, SignupRequest, SignupResponse } from '../models/auth.model';
 
+export interface KiteHistoricalDataParams {
+  fromDate: string;
+  toDate: string;
+  interval: string;
+  instrumentToken: number;
+  symbol: string;
+  exchange: string;
+  marketSegment: string;
+  instrumentType: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -56,8 +67,17 @@ export class ApiService {
     ); 
   }
 
-  getNifty50Data(): Observable<any> {
-    return this.http.get(`${this.backendUrl}/kite/getNiftyIndexPerMinute`);
+  getNifty50Data(filters: KiteHistoricalDataParams): Observable<any> {
+    return this.http.post(`${this.backendUrl}/kite/getNiftyIndexPerMinute`, {
+      from_date: filters.fromDate,
+      to_date: filters.toDate,
+      interval: filters.interval,
+      instrument_token: filters.instrumentToken,
+      symbol: filters.symbol,
+      exchange: filters.exchange,
+      segment: filters.marketSegment,
+      instrument_type: filters.instrumentType,
+    });
   }
 
   getprofile(): Observable<any> {

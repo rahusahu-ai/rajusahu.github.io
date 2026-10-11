@@ -87,6 +87,12 @@ section:hover {
   @apply text-slate-800;
 } 
 
+app-kite-login .field input[type='date']::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1) !important;
+  cursor: pointer;
+}
+
+
 .dark .p-msg {
   @apply text-slate-200;
 } 

@@ -28,22 +28,37 @@ describe('KiteLogin', () => {
     expect(component).toBeTruthy();
   });
 
-  it('renders the Kite login and Nifty 50 actions', () => {
+  it('renders the Kite login and profile actions', () => {
     const buttons = fixture.nativeElement.querySelectorAll('button');
 
     expect(buttons.length).toBe(2);
     expect(buttons[0].textContent.trim()).toBe('Login to Kite');
-    expect(buttons[1].textContent.trim()).toBe('Get Nifty 50 Data');
+    expect(buttons[1].textContent.trim()).toBe('Get Profile Data');
   });
 
-  it('requests Nifty 50 data from the local server endpoint', () => {
-    component.getNifty50Data();
+  it('requests historical data using the selected instrument token', () => {
+    component.fromDate = '2026-10-01';
+    component.toDate = '2026-10-11';
+    component.interval = '5minute';
+    component.instrumentToken = 256265;
+    component.getMarketData();
 
-    const request = httpTestingController.expectOne('/api/kite/nifty50');
-    expect(request.request.method).toBe('GET');
-    request.flush({ data: [{ symbol: 'NIFTY 50' }] });
+    const request = httpTestingController.expectOne((req) =>
+      req.url.endsWith('/kite/getNiftyIndexPerMinute') && req.method === 'POST'
+    );
+    expect(request.request.body).toEqual({
+      from_date: '2026-10-01',
+      to_date: '2026-10-11',
+      interval: '5minute',
+      instrument_token: 256265,
+      symbol: 'NIFTY 50',
+      exchange: 'NSE',
+      segment: 'index',
+      instrument_type: 'normal',
+    });
+    request.flush({ candles: [[1, 2, 3]] });
 
-    expect(component.nifty50Data).toEqual({ data: [{ symbol: 'NIFTY 50' }] });
-    expect(component.status).toBe('Nifty 50 data loaded');
+    expect(component.nifty50Data).toEqual({ candles: [[1, 2, 3]] });
+    expect(component.status).toContain('Market data loaded for NIFTY 50');
   });
 });
