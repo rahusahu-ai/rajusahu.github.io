@@ -13,6 +13,45 @@ export interface KiteHistoricalDataParams {
   exchange: string;
   marketSegment: string;
   instrumentType: string;
+  saveToDb: boolean;
+}
+
+export interface KiteInstrument {
+  instrument_token: string;
+  exchange_token: string;
+  tradingsymbol: string;
+  name: string;
+  last_price: number;
+  expiry: string;
+  strike: number;
+  tick_size: number;
+  lot_size: number;
+  instrument_type: string;
+  segment: string;
+  exchange: string;
+}
+
+export interface KiteDropdownOption {
+  value: string;
+  label: string;
+}
+
+export interface KiteBackfillParams {
+  instrument_token: number;
+  symbol: string;
+  years: number;
+  interval: string;
+}
+
+export interface KiteBackfillResult {
+  inserted?: number;
+  failed?: number;
+  inserted_count?: number;
+  failed_count?: number;
+  insertedCount?: number;
+  failedCount?: number;
+  message?: string;
+  errors?: string[];
 }
 
 @Injectable({
@@ -77,12 +116,36 @@ export class ApiService {
       exchange: filters.exchange,
       segment: filters.marketSegment,
       instrument_type: filters.instrumentType,
+      save_to_db: filters.saveToDb,
     });
   }
 
   getprofile(): Observable<any> {
     return this.http.get(`${this.backendUrl}/kite/getKiteProfile`);
   } 
+
+  getAllExchangeList(): Observable<KiteDropdownOption[]> {
+    return this.http.get<KiteDropdownOption[]>(`${this.backendUrl}/kite/getAllExchangeList`);
+  }
+
+  getSegmentList(exchange: string): Observable<KiteDropdownOption[]> {
+    return this.http.get<KiteDropdownOption[]>(`${this.backendUrl}/kite/getSegmentList`, {
+      params: { exchange },
+    });
+  }
+
+  getAllEntityList(exchange: string, segment: string): Observable<KiteInstrument[]> {
+    return this.http.get<KiteInstrument[]>(`${this.backendUrl}/kite/getAllEntityList`, {
+      params: { exchange, segment },
+    });
+  }
+
+  backfillHistoricalData(params: KiteBackfillParams): Observable<KiteBackfillResult> {
+    return this.http.post<KiteBackfillResult>(
+      `${this.backendUrl}/kite/backfillHistoricalData`,
+      params
+    );
+  }
 
   // ==================== Contact Form & Portfolio APIs ====================
 

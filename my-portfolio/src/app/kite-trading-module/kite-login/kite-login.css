@@ -104,8 +104,30 @@ h1 {
   color-scheme: dark;
 }
 
-.get-button {
+.save-to-db {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 1rem;
+  color: #b8c6d6;
+  font-size: 0.875rem;
+}
+
+.save-to-db input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #0d9b88;
+}
+
+.market-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.market-actions .get-button {
+  margin-top: 0;
 }
 
 .actions {
@@ -161,6 +183,10 @@ pre {
   }
 
   .actions {
+    flex-direction: column;
+  }
+
+  .market-actions {
     flex-direction: column;
   }
 
