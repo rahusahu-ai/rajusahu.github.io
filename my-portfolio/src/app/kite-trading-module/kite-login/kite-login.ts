@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   ApiService,
   KiteBackfillResult,
@@ -44,10 +45,17 @@ export class KiteLogin implements OnInit {
   ];
   readonly backfillYears = Array.from({ length: 15 }, (_, index) => index + 1);
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.getAllExchangeList();
+    if (this.route.snapshot.queryParamMap.get('kiteLogin') === 'success') {
+      this.getAllExchangeList();
+    } else {
+      this.status = 'Log in to Kite to load exchanges.';
+    }
   }
 
   get filteredEntities(): KiteInstrument[] {
