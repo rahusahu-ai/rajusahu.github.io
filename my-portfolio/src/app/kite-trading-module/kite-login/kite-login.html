@@ -55,8 +55,8 @@
       <label class="field">
         <span>Exchange</span>
         <select name="exchange" [(ngModel)]="exchange" (ngModelChange)="onExchangeChange()">
-          @for (item of exchangeList; track item.value) {
-            <option [value]="item.value">{{ item.label }}</option>
+          @for (item of exchangeList; track item) {
+            <option [value]="item">{{ item }}</option>
           }
         </select>
       </label>
@@ -64,8 +64,8 @@
       <label class="field">
         <span>Segment</span>
         <select name="segment" [(ngModel)]="segment" (ngModelChange)="onSegmentChange()" [disabled]="!segmentList.length">
-          @for (item of segmentList; track item.value) {
-            <option [value]="item.value">{{ item.label }}</option>
+          @for (item of segmentList; track item) {
+            <option [value]="item">{{ item }}</option>
           }
         </select>
       </label>

@@ -31,11 +31,6 @@ export interface KiteInstrument {
   exchange: string;
 }
 
-export interface KiteDropdownOption {
-  value: string;
-  label: string;
-}
-
 export interface KiteBackfillParams {
   instrument_token: number;
   symbol: string;
@@ -124,12 +119,12 @@ export class ApiService {
     return this.http.get(`${this.backendUrl}/kite/getKiteProfile`);
   } 
 
-  getAllExchangeList(): Observable<KiteDropdownOption[]> {
-    return this.http.get<KiteDropdownOption[]>(`${this.backendUrl}/kite/getAllExchangeList`);
+  getAllExchangeList(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.backendUrl}/kite/getAllExchangeList`);
   }
 
-  getSegmentList(exchange: string): Observable<KiteDropdownOption[]> {
-    return this.http.get<KiteDropdownOption[]>(`${this.backendUrl}/kite/getSegmentList`, {
+  getSegmentList(exchange: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.backendUrl}/kite/getSegmentList`, {
       params: { exchange },
     });
   }

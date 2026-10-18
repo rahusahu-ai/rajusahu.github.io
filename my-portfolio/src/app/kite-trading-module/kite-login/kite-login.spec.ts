@@ -31,20 +31,20 @@ describe('KiteLogin', () => {
     const exchangesRequest = httpTestingController.expectOne((req) =>
       req.url.endsWith('/kite/getAllExchangeList') && req.method === 'GET'
     );
-    exchangesRequest.flush([{ value: 'NSE', label: 'National Stock Exchange' }]);
+    exchangesRequest.flush(['BFO', 'BSE', 'CDS', 'GLOBAL', 'MCX', 'NCO', 'NFO', 'NSE', 'NSEIX']);
 
     const segmentsRequest = httpTestingController.expectOne((req) =>
       req.url.endsWith('/kite/getSegmentList') &&
       req.method === 'GET' &&
       req.params.get('exchange') === 'NSE'
     );
-    segmentsRequest.flush([{ value: 'NSE', label: 'NSE Cash' }]);
+    segmentsRequest.flush(['INDICES', 'NSE']);
 
     const entitiesRequest = httpTestingController.expectOne((req) =>
       req.url.endsWith('/kite/getAllEntityList') &&
       req.method === 'GET' &&
       req.params.get('exchange') === 'NSE' &&
-      req.params.get('segment') === 'NSE'
+      req.params.get('segment') === 'INDICES'
     );
     entitiesRequest.flush([
       {
@@ -57,7 +57,7 @@ describe('KiteLogin', () => {
         strike: 0,
         tick_size: 0.05,
         lot_size: 1,
-        segment: 'NSE',
+        segment: 'INDICES',
         instrument_type: 'EQ',
         exchange: 'NSE',
       },
@@ -84,8 +84,10 @@ describe('KiteLogin', () => {
     const instrumentSelect: HTMLSelectElement =
       fixture.nativeElement.querySelector('select[name="entity"]');
 
-    expect(component.exchangeList).toEqual([{ value: 'NSE', label: 'National Stock Exchange' }]);
-    expect(component.segmentList).toEqual([{ value: 'NSE', label: 'NSE Cash' }]);
+    expect(component.exchangeList).toContain('NSE');
+    expect(fixture.nativeElement.querySelector('select[name="exchange"]').options.length).toBe(9);
+    expect(component.segmentList).toEqual(['INDICES', 'NSE']);
+    expect(component.segment).toBe('INDICES');
     expect(component.entities.length).toBe(1);
     expect(component.filteredEntities.length).toBe(1);
     expect(component.instrumentToken).toBe(403465);
@@ -110,7 +112,7 @@ describe('KiteLogin', () => {
       instrument_token: 403465,
       symbol: 'SAHYADRI',
       exchange: 'NSE',
-      segment: 'NSE',
+      segment: 'INDICES',
       instrument_type: 'normal',
       save_to_db: false,
     });
