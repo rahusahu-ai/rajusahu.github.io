@@ -35,16 +35,17 @@
       </label>
 
       <label class="field">
-        <span>Symbol group</span>
-        <select name="marketSegment" [(ngModel)]="marketSegment" (ngModelChange)="onMarketSegmentChange()">
-          <option value="index">Index</option>
-          <option value="equity">Equity</option>
+        <span>Years to backfill</span>
+        <select name="years" [(ngModel)]="years">
+          @for (year of backfillYears; track year) {
+            <option [ngValue]="year">{{ year }}</option>
+          }
         </select>
       </label>
 
       <label class="field">
         <span>Instrument type</span>
-        <select name="instrumentType" [(ngModel)]="instrumentType">
+        <select name="instrumentType" [(ngModel)]="instrumentType" (ngModelChange)="onInstrumentFiltersChange()">
           <option value="normal">Normal</option>
           <option value="option">Option</option>
           <option value="future">Future</option>
@@ -53,30 +54,53 @@
 
       <label class="field">
         <span>Exchange</span>
-        <select name="exchange" [(ngModel)]="exchange">
-          <option value="NSE">NSE</option>
-          <option value="BSE">BSE</option>
-        </select>
-      </label>
-
-      <label class="field symbol-field">
-        <span>{{ marketSegment === 'index' ? 'Index' : 'Listed stock' }}</span>
-        <select name="symbol" [(ngModel)]="symbol" (ngModelChange)="onSymbolChange()">
-          @for (item of symbols; track item) {
-            <option [value]="item">{{ item }}</option>
+        <select name="exchange" [(ngModel)]="exchange" (ngModelChange)="onExchangeChange()">
+          @for (item of exchangeList; track item.value) {
+            <option [value]="item.value">{{ item.label }}</option>
           }
         </select>
       </label>
 
       <label class="field">
-        <span>Instrument token</span>
-        <input type="number" name="instrumentToken" [(ngModel)]="instrumentToken" min="1" step="1" required />
+        <span>Segment</span>
+        <select name="segment" [(ngModel)]="segment" (ngModelChange)="onSegmentChange()" [disabled]="!segmentList.length">
+          @for (item of segmentList; track item.value) {
+            <option [value]="item.value">{{ item.label }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="field symbol-field">
+        <span>Entity</span>
+        <select
+          name="entity"
+          [(ngModel)]="instrumentToken"
+          (ngModelChange)="onInstrumentChange($event)"
+          [disabled]="!filteredEntities.length"
+          required
+        >
+          @for (item of filteredEntities; track item.instrument_token) {
+            <option [value]="item.instrument_token">
+              {{ item.tradingsymbol }}
+            </option>
+          }
+        </select>
       </label>
     </div>
 
-    <button class="get-button" type="submit" [disabled]="isLoading">
-      {{ isLoading ? 'Loading…' : 'Get' }}
-    </button>
+    <label class="save-to-db">
+      <input type="checkbox" name="saveToDb" [(ngModel)]="saveToDb" />
+      <span>Save retrieved data to DB</span>
+    </label>
+
+    <div class="market-actions">
+      <button class="get-button" type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Loading…' : 'Get' }}
+      </button>
+      <button class="get-button secondary" type="button" (click)="backfillHistoricalData()" [disabled]="isLoading">
+        {{ isLoading ? 'Working…' : 'Backfill' }}
+      </button>
+    </div>
   </form>
 
   <div class="actions">
