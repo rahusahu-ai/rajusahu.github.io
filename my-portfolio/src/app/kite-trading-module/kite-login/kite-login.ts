@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import {
   ApiService,
   KiteBackfillResult,
-  KiteDropdownOption,
   KiteInstrument,
 } from '../../services/api.service';
 
@@ -20,8 +19,8 @@ export class KiteLogin implements OnInit {
   isLoading = false;
   nifty50Data: unknown = null;
   entities: KiteInstrument[] = [];
-  exchangeList: KiteDropdownOption[] = [];
-  segmentList: KiteDropdownOption[] = [];
+  exchangeList: string[] = [];
+  segmentList: string[] = [];
   fromDate = this.getDateOffset(-7);
   toDate = this.getDateOffset(0);
   interval = '5minute';
@@ -83,6 +82,7 @@ export class KiteLogin implements OnInit {
   }
 
   onInstrumentFiltersChange(): void {
+    this.getAllExchangeList();
     this.selectFirstEntity();
   }
 
@@ -165,16 +165,20 @@ export class KiteLogin implements OnInit {
 
   getAllExchangeList(): void {
     this.status = 'Loading exchanges…';
+    console.info('[Kite] Requesting exchange list.');
     this.apiService.getAllExchangeList().subscribe({
       next: (exchanges) => {
+        console.info('[Kite] Exchange list response received:', exchanges);
         this.exchangeList = exchanges;
-        this.exchange = exchanges[0]?.value ?? '';
+        this.exchange = exchanges.includes('NSE') ? 'NSE' : exchanges[0] ?? '';
+        console.info('[Kite] Selected exchange:', this.exchange || '(none)');
         this.status = `Loaded ${exchanges.length} exchanges.`;
         if (this.exchange) {
           this.getSegmentList();
         }
       },
       error: (error) => {
+        console.error('[Kite] Failed to load exchange list:', error);
         this.status = error?.error?.message || 'Unable to load exchanges.';
       },
     });
@@ -185,7 +189,7 @@ export class KiteLogin implements OnInit {
     this.apiService.getSegmentList(this.exchange).subscribe({
       next: (segments) => {
         this.segmentList = segments;
-        this.segment = segments[0]?.value ?? '';
+        this.segment = segments[0] ?? '';
         this.status = `Loaded ${segments.length} segments for ${this.exchange}.`;
         if (this.segment) {
           this.getAllEntityList();
