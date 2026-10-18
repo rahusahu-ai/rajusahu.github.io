@@ -109,7 +109,7 @@ app.get('/api/kite/callback', async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
     console.log('[Kite] Session cookie created; redirecting to tradeAnalysis.');
-    res.redirect('/tradeAnalysis');
+    res.redirect('/tradeAnalysis?kiteLogin=success');
   } catch (authError) {
     console.error('[Kite] Callback token exchange failed.', authError);
     res.status(502).send({ message: authError instanceof Error ? authError.message : 'Kite authentication failed.' });

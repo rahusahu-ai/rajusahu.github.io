@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { KiteLogin } from './kite-login';
 
@@ -12,7 +13,13 @@ describe('KiteLogin', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [KiteLogin, HttpClientTestingModule],
-      providers: [provideZonelessChangeDetection()]
+      providers: [
+        provideZonelessChangeDetection(),
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParamMap: { get: () => 'success' } } },
+        },
+      ]
     })
     .compileComponents();
 
