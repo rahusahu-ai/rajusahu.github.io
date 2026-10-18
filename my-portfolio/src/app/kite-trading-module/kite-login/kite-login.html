@@ -81,7 +81,7 @@
         >
           @for (item of filteredEntities; track item.instrument_token) {
             <option [value]="item.instrument_token">
-              {{ item.tradingsymbol }}
+              {{ item.name }}
             </option>
           }
         </select>
