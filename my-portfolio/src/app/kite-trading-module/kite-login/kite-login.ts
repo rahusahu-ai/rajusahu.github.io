@@ -90,7 +90,7 @@ export class KiteLogin implements OnInit {
     const token = Number(instrumentToken);
     this.instrumentToken = Number.isSafeInteger(token) && token > 0 ? token : null;
     const instrument = this.entities.find((item) => Number(item.instrument_token) === token);
-    this.symbol = instrument?.tradingsymbol ?? '';
+    this.symbol = instrument?.trading_symbol ?? '';
   }
 
   getMarketData(): void {
@@ -218,7 +218,7 @@ export class KiteLogin implements OnInit {
   private selectFirstEntity(): void {
     const instrument = this.filteredEntities[0];
     this.instrumentToken = instrument ? Number(instrument.instrument_token) : null;
-    this.symbol = instrument?.tradingsymbol ?? '';
+    this.symbol = instrument?.trading_symbol ?? '';
   }
 
   private getBackfillCounts(result: unknown): string {

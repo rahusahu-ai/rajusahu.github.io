@@ -50,16 +50,17 @@ describe('KiteLogin', () => {
       {
         instrument_token: '403465',
         exchange_token: '14900',
-        tradingsymbol: 'SAHYADRI',
-        name: 'SAHYADRI INDUSTRIES',
-        last_price: 0,
-        expiry: '',
-        strike: 0,
-        tick_size: 0.05,
+        trading_symbol: 'BHARATBOND-APR30',
+        name: 'NSE INDEX BHARATBOND-APR30',
+        last_price: '0.0000',
+        expiry: null,
+        strike: '0.0000',
+        tick_size: '0.0000',
         lot_size: 1,
         segment: 'INDICES',
         instrument_type: 'EQ',
         exchange: 'NSE',
+        updated_at: '2026-10-17T23:47:51.327Z',
       },
     ]);
     await fixture.whenStable();
@@ -91,8 +92,9 @@ describe('KiteLogin', () => {
     expect(component.entities.length).toBe(1);
     expect(component.filteredEntities.length).toBe(1);
     expect(component.instrumentToken).toBe(403465);
+    expect(component.symbol).toBe('BHARATBOND-APR30');
     expect(instrumentSelect.selectedOptions[0].value).toBe('403465');
-    expect(instrumentSelect.selectedOptions[0].textContent).toContain('SAHYADRI');
+    expect(instrumentSelect.selectedOptions[0].textContent).toContain('NSE INDEX BHARATBOND-APR30');
   });
 
   it('requests historical data using the selected instrument token', () => {
@@ -110,7 +112,7 @@ describe('KiteLogin', () => {
       to_date: '2026-10-11',
       interval: '5minute',
       instrument_token: 403465,
-      symbol: 'SAHYADRI',
+      symbol: 'BHARATBOND-APR30',
       exchange: 'NSE',
       segment: 'INDICES',
       instrument_type: 'normal',
@@ -119,7 +121,7 @@ describe('KiteLogin', () => {
     request.flush({ candles: [[1, 2, 3]] });
 
     expect(component.nifty50Data).toEqual({ candles: [[1, 2, 3]] });
-    expect(component.status).toContain('Market data loaded for SAHYADRI');
+    expect(component.status).toContain('Market data loaded for BHARATBOND-APR30');
   });
 
   it('passes the save-to-database choice with the historical data request', () => {
@@ -142,7 +144,7 @@ describe('KiteLogin', () => {
     );
     expect(request.request.body).toEqual({
       instrument_token: 403465,
-      symbol: 'SAHYADRI',
+      symbol: 'BHARATBOND-APR30',
       years: 3,
       interval: '5minute',
     });

@@ -19,16 +19,17 @@ export interface KiteHistoricalDataParams {
 export interface KiteInstrument {
   instrument_token: string;
   exchange_token: string;
-  tradingsymbol: string;
+  trading_symbol: string;
   name: string;
-  last_price: number;
-  expiry: string;
-  strike: number;
-  tick_size: number;
+  last_price: string;
+  expiry: string | null;
+  strike: string;
+  tick_size: string;
   lot_size: number;
   instrument_type: string;
   segment: string;
   exchange: string;
+  updated_at: string;
 }
 
 export interface KiteBackfillParams {
